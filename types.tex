@@ -1,0 +1,710 @@
+\documentclass[fontsize=10pt,a4paper,fleqn]{scrreprt} % Класс печатного документа.
+
+
+%%% Математика
+\usepackage{amsmath,amsfonts,amssymb,amsthm} % AMS
+\usepackage{mathtools} % Еще AMS
+\usepackage{mathtext} % Русские буквы в фомулах
+
+%%% Номера только там, где нужно
+% \usepackage{autonum}
+
+%%% Формула в рамке: \boxed{}
+
+%% Apply labels to enumerate's items
+\usepackage{enumitem}
+
+% Treating absolutes in nice way
+% USAGE: \abs{smth}
+%http://tex.stackexchange.com/questions/43008/absolute-value-symbols
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+
+% Swap the definition of \abs* and \norm*, so that \abs
+% and \norm resizes the size of the brackets, and the
+% starred version does not.
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+%
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\makeatother
+
+% ++ arrow with text:
+% \underset{text}{arrow}
+% \overset{text}{arrow}
+
+
+% математические символы русской традиции
+\let\oldphi\phi \let\phi\varphi \let\varphi\oldphi
+\let\oldPhi\Phi \let\Phi\varPhi \let\varPhi\oldPhi
+%\let\oldrho\rho \let\rho\varrho \let\varrho\oldrho
+\let\oldepsilon\epsilon \let\epsilon\varepsilon  \let\varepsilon\oldepsilon
+\let\oldleq\leq \let\leq\leqslant \let\leqslant \oldleq
+\let\oldgeq\geq \let\geq\geqslant \let\geqslant \oldgeq
+
+\usepackage{geometry} % Меняем поля страницы
+\geometry{left=2cm}% левое поле
+\geometry{right=1.5cm}% правое поле \geometry{top=1cm}% верхнее поле
+\geometry{bottom=2cm}% нижне
+\newcommand*{\hm}[1]{#1\nobreak\discretionary{}% Перенос знаков в формулах
+{\hbox{$\mathsurround=0pt #1$}}{}}
+
+
+\pretolerance 9000
+%%% Шрифты
+\usepackage[russian]{babel} % Поддержка русского языка.
+\usepackage[X2,T2A]{fontenc} % Кодировки
+\usepackage[utf8]{inputenc} % Кодировка TeX-файла
+\usepackage{cmap} % Поддержка русского в PDF
+
+%%% Шрифты
+
+
+\usepackage{euler}
+\usepackage{hyperref} %Advanced PDF
+%% суммы ломают строчки - да!
+\everymath{\displaystyle}
+
+%определения:
+\newtheorem*{mydef}{Определение}
+%теоремки
+\newtheorem*{mytm}{Теорема}
+
+\numberwithin{equation}{section}
+\titlehead{Moscow Institute of Electronics and Mathematics
+           \\12 Malaya Paveletskaya Street
+           \\Moscow
+           \\Russian Federation}
+\author{Pavel Borisov}
+\subject{Типы простейших ОДУ}
+\title{Types of differential equations}
+\date{2014}
+\lowertitleback{Типы дифференциальных уравнений}
+
+\begin{document}
+\maketitle
+\newpage
+\chapter{Уравнения первого порядка}
+\section{Уравнения с разделяющимися переменными}
+\label{sec:divided}
+
+\subsection{Вид}
+\begin{align}
+  \label{eq:divided}
+  \boxed{M(x)N(y)dx + P(x)Q(y)dy = 0} && \boxed{y' = f(x)g(y)}
+\end{align}
+
+\subsection{Пример}
+
+\begin{align*}
+  xydx + (x+1) dy = 0
+\end{align*}
+
+\subsection{Решение}
+
+\begin{enumerate}
+\item приводим к виду $M(x)N(y)dx = P(x)Q(y)dy$
+\item в левой части делим на $N(y)$, в левой на $P(x)$, разделяем $x$ и $y$ между разными частями уравнения; учитываем решения, упущенные при делении\\
+  Получаем вид $\widetilde{Q}(x)dx = \widetilde{P}(y)dy$
+%\item проверяем существование перевернутого уравнения (сформировываем перевернутое уравнение из исходного путем замены всех членов уравнения на обратные им)
+\item интегрируем обе части уравнения
+\item делаем вид y=f(x), если необходимо (выражение легко упрощается)
+\item PROFIT!
+\end{enumerate}
+
+\section{Однородные уравнения}
+\label{sec:homogeneous}
+
+\subsection{Вид}
+
+\begin{align}
+\label{eq:homogeneous}
+\boxed{M(x,y)dx + N(x,y)dy = 0} && \boxed{y' =f\left(\frac{y}{x}\right)}
+\end{align}
+
+\subsection{Пример}
+\begin{align*}
+xdy = (x+y)dx
+\end{align*}
+
+\subsection{Решение}
+\begin{enumerate}
+\item Проверка на однородность:
+  \begin{equation*}
+    \left\{
+    \begin{array}{ll}
+    M(kx, ky) \equiv k^n M(x,y) & n \in \mathbb{R} \\
+    N(kx, ky) \equiv k^n M (x, y) & n \text{ is the same as above}
+  \end{array}
+  \right.
+  \end{equation*}
+\item Приводим к виду (\ref{eq:homogeneous})
+\item Полагаем
+  \begin{align*}
+    y = tx && dy = xdt + tdx
+  \end{align*}
+\item Решаем уравнение формы (\ref{eq:divided})
+\item возвращаемся к переменному $y$
+\item PROFIT!
+\end{enumerate}
+
+\section{Уравнения вида y' = f(ax+by+c)}
+\label{sec:axbyc}
+
+\subsection{Вид}
+\begin{align}
+  y' = f(ax+by+c)
+\end{align}
+
+\subsection{Решение}
+Делаем замену $z = ax + by + c$, тогда $z' = a + by'$. Получаем уравнение
+с разделяющимися переменными вида (\ref{eq:divided}).
+
+\subsection{Пример}
+\begin{align*}
+  y' &= \frac1{x+2y} \\
+  x+2y &= z && ax + by +c = z \\
+  1 + 2y' &= z' \\
+  \frac{z'-1}2 &= \frac1z && \cdot 2z \\
+  z'z - z  &= 2 \\
+  z'z &= 2+z\\
+  \frac{dz}{dz}  &= \frac{2+z}z\\
+  \frac{z}{2+z}dz &= dx
+\end{align*}
+далее решаем (\ref{eq:divided}) и возвращаемся к $x$ и $y$.
+
+\section{Линейные уравнения первого порядка}
+\label{sec:lineardiff}
+
+\subsection{Вид}
+\begin{align}
+  \label{eq:lineardiff}
+  \boxed{y' + a(x) y = b(x)}
+\end{align}
+
+\subsection{Алгоритм решения}
+\begin{enumerate}
+\item Решаем $y' + a(x)y = 0$ (соответствующее линейное однородное уравнение по форме (\ref{sec:divided}) (с разделяющимися переменными. В результате получаем $y = C\cdot z (x)$.
+\item Применяем метод вариации постоянной:
+  \begin{enumerate}
+  \item $C = C(x) \Rightarrow y = C(x)\cdot z(x).$
+  \item Выражаем $y'$ через $C'(x)$ и подставляем в исходное уравнение
+  \item Записываем ответ в удобном виде с зависимой переменной $y$ (или $x$ в некоторых случаях).
+  \end{enumerate}
+\end{enumerate}
+
+\subsection{Пример решения}
+\begin{align}
+  &(xy + e^x)dx - xdy = 0 \nonumber && \text{перепишем в виде (\ref{eq:lineardiff})}\\
+  &(xy +e^x) - x\frac{dy}{dx} = 0  && x \equiv 0 \text{ является решением } (dx_o = 0; x_o = 0 = const) \nonumber\\
+  & x(y-y') + e^x = 0 \label{eq:linear:start} && b(x) = e^x \\
+  & x(y-y') = 0 \nonumber \\
+  &xy - xy' = 0 \nonumber && \frac{dy}{dx} = y \\
+  &\frac{dy}y = dx \nonumber\\
+  &x = \ln|y| + C_0 && C_0 \in \mathbb{R}\\
+  &e^x = |y|\cdot C_1 && C_1 = e^{C_0} \nonumber \\
+  &e^x = y\cdot C_2 && C_2 = \pm C_1 \nonumber \\
+  & y = C_3e^x && C_3 = \frac1{e^C2} \label{eq:answ}
+  \end{align}
+Применим метод вариации постоянной.
+\begin{align*}
+  y' = C'_3(x)e^x + C_3(x)e^x && \text{выразили } y' \text{ через } C_3'(x)
+\end{align*}
+\begin{align}
+  x(C_3'(x) + C_3(x) - C_3(x))e^x = e^x && \text{подставили } C_3(x) \text{ и } C_3'(x) \text{ в } (\ref{eq:linear:start}) \\
+  xC_3'(x) = 1 &&
+  C_3'(x) = \frac1x\nonumber \\
+  C_3(x) = \ln(x) + C  \label{eq:varansw}
+\end{align}
+
+\textbf{Ответ: } $y = e^x(ln|x| + C); x \equiv 0$ (подставили (\ref{eq:varansw} в \ref{eq:answ}))
+
+\section{Уравнение Бернулли}
+\label{sec:bernulli}
+\subsection{Вид}
+\begin{align}
+  \boxed{y' = a(x)y + b(x)y^\alpha; \alpha \neq 1 \wedge \alpha \neq 0}
+\end{align}
+
+\subsection{Решение}
+\begin{enumerate}
+\item разделить на $y^\alpha$
+\item проанализировать существование решения $y = 0$
+\item сделать замену $\frac1{y^{n-\alpha}} = z \Rightarrow z' = (\alpha - 1)\frac{y'}{y^\alpha}$
+\item Решить уравнение вида (\ref{eq:lineardiff})
+\item PROFIT!!!
+\end{enumerate}
+
+\section{Уравнение в полных дифференциалах}
+\label{sec:fulldiff}
+
+\subsection{Вид}
+\begin{align}
+  \boxed{P(x,y)dx + Q(x,y)dy = 0}
+\end{align}
+
+\subsection{Алгоритм решения}
+Хотим найти функцию $u$, такую, что в левой части уравнения записан её дифференциал, т.е. уравнение имеет вид:
+\begin{align*}
+  du(x,y) = 0\\
+\end{align*}
+Тогда его интеграл записывается так:
+\begin{align*}
+u(x,y) = C\\
+  du(x,y) = \frac{\partial u}{\partial x}dx + \frac{\partial u}{\partial y}dy\\
+  \boxed{\frac{\partial P}{\partial y} = \frac{\partial Q}{\partial x}}
+\end{align*}
+\begin{align}
+  \begin{cases}
+    \frac{\partial u}{\partial x} &= P(x,y)\\
+    \frac{\partial u}{\partial y} &= Q(x,y)\label{eq:uy}\\
+  \end{cases}
+  u(x,y) &= \int{}P(x,y)dx + C(y)
+\end{align}
+Получаем $C'(y)$ путём вычисления частной производной полученного выражения: $\frac{\partial u}{\partial y}$ и выражаем через имеющееся выражение $Q(x,y)$ (\ref{eq:uy}).
+
+\subsection{Пример}
+
+\begin{align*}
+&  \frac{3x^2+y^2}{y^2}dx - \frac{2x^3+5y}{y^3}dy = 0 \\
+  \begin{cases}
+    P(x,y) =\frac{3x^2+y^2}{y^2}\\
+    Q(x,y) = -\frac{2x^3+5y}{y^3}\\
+  \end{cases}\\
+&  \frac{\partial P}{\partial y} = \frac{\partial Q}{\partial x} = -\frac{6x^2}{y^3}\\
+  \begin{cases}
+    \frac{\partial u}{\partial x} = \frac{3x^2}{y^2} + 1\\
+    \frac{\partial u}{\partial y} = -\frac{2x^3}{y^3} - \frac5{y^2}\\
+  \end{cases}\\
+&  u(x,y) = \int\left(\frac{3x^2}{y^2} +1 \right)dx +C(y) =  \frac{x^3}{y^2} + x +C(y)\\
+& \frac{\partial u}{\partial y} = -\frac{2x^3}{y^3} + C'(y) = -\frac{2x^3}{y^3} - \frac5{y^2}\\
+& C'(y) = -\frac5{y^2}\\
+& C(y) = \frac5y + C_1, C_1 \in \mathbb{R}\\
+&\frac{x^3}{y^2} + x+ \frac5y + C_1 = C_2\\
+\end{align*}
+Ответ: $ \frac{x^3}{y^2} + x+ \frac5y = C_3.$
+
+\section{Уравнение Клеро}
+\label{sec:clerau}
+
+\subsection{Вид и решение}
+\begin{align}
+  y = xy' + \phi(y')
+\end{align}
+Пусть $y_x' = \rho$
+\begin{align*}
+  y &= x\rho+\phi(\rho)\\
+  \rho &= x\rho' + \rho + \phi'(\rho)\rho'\\
+\end{align*}
+\[
+\begin{cases}
+  y = x\rho + \phi(\rho)\\
+  \left[
+    \begin{array}{ll}
+      \rho' = 0\\
+      x + \phi(\rho) = 0
+    \end{array}
+    \right.
+\end{cases}
+\]
+\[
+\left[
+\begin{array}{ll}
+  \begin{cases}
+    \rho = c = const\\
+    y = cx + \phi(c)\\
+  \end{cases}\\
+  \begin{cases}
+    x = -\phi'(\rho)\\
+    y = x\rho + \phi(\rho)\\
+  \end{cases}\\
+\end{array}
+\right.
+\left[
+  \begin{array}{ll}
+    y = cx+ \phi(c)\\
+    \begin{cases}
+      x = \phi'(\rho)\\
+      y = -\phi'(\rho)\cdot\rho + \phi(\rho)
+    \end{cases}
+  \end{array}
+\right.
+\]
+
+\subsection{Пример}
+\begin{align}
+  y = xy' - (y')^2 \\
+  y' = \rho\nonumber\\
+  y =  \rho x - \rho^2\label{eq:cl:finaly}\\
+  \rho = x \rho' + \rho - 2\rho\cdot \rho'\nonumber\\
+  x\rho' - 2\rho\rho'  = 0\nonumber\\
+  \rho'(x-2\rho) = 0\nonumber\\
+  \begin{cases}
+    \left[
+      \begin{array}{ll}
+        \rho' = 0 \nonumber\\
+        x - 2\rho = 0\nonumber\\
+      \end{array}
+    \right.\\
+      y = \rho{}x - \rho^2 (\ref{eq:cl:finaly}) \nonumber
+    \end{cases}
+\end{align}
+\begin{enumerate}
+\item
+  \begin{align}
+    \rho' = 0 \nonumber\\
+    p = C && y = Cx - C^2 \nonumber\\
+  \end{align}
+\item
+  \begin{equation*}
+    \begin{cases}
+      x =  2\rho\\
+      y = \rho{}x - \rho^2 = \rho^2
+    \end{cases}\\
+    y = \frac{x^2}4
+  \end{equation*}
+\end{enumerate}
+{\bfseries Ответ:}
+\begin{align*}
+\boxed{y = Cx-C^2}\\
+\boxed{y=\frac{x^2}4}
+\end{align*}
+
+\section{Уравнение Лагранжа}
+\label{sec:lagrange}
+\subsection{Вид и решение}
+\begin{align}
+\label{eq:lagrange}
+  y = x \psi(\rho) + \phi(\rho)
+  \psi(y') \neq y'
+\end{align}
+Пусть $y'_x = \rho$:
+\begin{align*}
+&  y = x\psi(\rho) + \phi(\rho)\\
+&  \rho = x\psi'(\rho)\rho' + \psi(\rho) + \phi'(\rho)\rho'\\
+&  \rho - \psi(\rho) = \frac{d\rho}{dx}(x\psi'(\rho) + \phi'(\rho)) && \cdot\frac{dx}{d\rho} \\
+& \frac{dx}{d\rho}(\rho - \psi(\rho)) - x\psi'(\rho) =  \phi'(\rho) && \text{кроме того, } \rho = const \text{ может являться решением, если } d\rho = 0
+\end{align*}
+Далее решается линейное однородное уравнение (\ref{sec:lineardiff}) ($x$ - функция, $\rho$ - аргумент).
+
+\subsection{Пример}
+\begin{align*}
+&  y + xy' = 4\sqrt{y'}\\
+& y = -xy' + 4\sqrt{y'}\\
+\end{align*}
+Пусть $y' = \rho$
+\begin{align}
+&  y = -x\rho+4\sqrt{\rho}\nonumber\\
+& \rho = -x\rho' - \rho +4\cdot\frac12\cdot\frac1{\sqrt{\rho}}\cdot\rho'\nonumber\\
+& 2\rho = \rho'(-x + \frac2{\rho})\nonumber\\
+& 2\rho\frac{dx}{d\rho} + x = \frac2{\rho}\label{eq:lag:linear}
+\end{align}
+Решаем линейное однородное уравнение вида (\ref{sec:lineardiff}).
+\begin{align*}
+  a(\rho) = 2\rho && b(\rho) = \frac2{\rho}
+\end{align*}
+\begin{align}
+&  2\rho{dx}{d\rho} = -x\nonumber\\
+&  2\frac{dx}x = -\frac12\frac{d\rho}\rho\nonumber\\
+&\ln |x| = ln\frac1{\sqrt{|\rho|}} + \ln C_1, C_1 > 0\nonumber \\
+&|x| = \frac{C_1}{\sqrt{|\rho|}}\nonumber\\
+&x = \frac{C_2}{\sqrt{|\rho|}}, C_2 = \pm C_1\nonumber & \text{опускаем модульные скобки, т.к. } y' \geq 0\\
+&x = \frac{C_2(\rho)}{\sqrt{\rho}}\label{eq:lag:linearresult}
+\end{align}
+Подставляем (\ref{eq:lag:linearresult}) в (\ref{eq:lag:linear}):
+\begin{align}
+&  2\rho\left(\frac{C_2'(\rho)}{\sqrt{\rho}} - \frac12 \frac{C_2(\rho)}{\rho^{\frac32}}\right) + \frac{C_2(\rho)}{\sqrt{\rho}} = \frac2{\rho}\nonumber\\
+&C_2'(\rho) = \frac1\rho\nonumber\\
+&C_2(\rho) = \ln |p| + C_3\nonumber\\
+\end{align}
+\begin{align*}
+  \begin{cases}
+  &  x = \frac{\ln|p| + C_3}{\sqrt{\rho}}\\
+  &  y = -x\rho + 4\sqrt{\rho}
+  \end{cases} &&
+  \begin{cases}
+  &  x = \frac{\ln|p| + C_3}{\sqrt{\rho}}\\
+  &  y = -\frac{\ln|p| + C_3}{\sqrt{\rho}}\rho + 4\sqrt{\rho}\\
+  &  y \equiv 0
+  \end{cases}
+\end{align*}
+
+
+\section{Уравнения вида  x =f(y')}
+\label{sec:derarg}
+\subsection{Вид и решение}
+\begin{align}
+  x = f(y')
+\end{align}
+Пусть $y' = \rho$
+\begin{align*}
+x = f(\rho)\\
+\frac{dy}{dx} = \rho\\
+dy = \rho dx = \rho \cdot f'(\rho)d\rho\\
+y = \int \rho f'(\rho)d\rho + C
+\end{align*}
+
+\subsection{Пример}
+\begin{align*}
+&  x = (y')^3 + y'\\
+&  y' = \rho\\
+&  x = \rho^3 + \rho\\
+&  \frac{dy}{dx} = \rho\\
+&  dy = \rho dx = \rho d(\rho^3+\rho) = \rho(3\rho^2+1)d\rho\\
+&  y = \int(3\rho^3+\rho)d\rho = \frac{3\rho^4}4 + \frac{\rho^2}2 + C
+\end{align*}
+
+{\bfseries Ответ:}
+\begin{equation*}
+\left\{
+  \begin{array}{ll}
+    x = \rho^3 + \rho\\
+    y = \frac{3\rho^4}4 + \frac{\rho^2}2 + C & C \in \mathbb{R}
+  \end{array}
+\right.
+\end{equation*}
+
+
+
+\section{Уравнения вида y = f(y')}
+
+\subsection{Вид и решение}
+\begin{align*}
+  y = f(y')&&
+  y' = \rho&&
+  y = f(\rho)\\
+  \frac{dy}{dx} = \rho\\
+  \rho = 0 \Rightarrow y' = 0 \Rightarrow y = f(0) \\
+  dx = \frac{dy}\rho = \frac{df(\rho)}\rho = \frac{f'(\rho)d\rho}\rho\\
+  \begin{cases}
+    x = \int\frac{f'(\rho)}\rho d\rho + C\\
+    y = f(\rho)\\
+    y = f(0)
+  \end{cases}
+\end{align*}
+
+\chapter{Понижение порядка уравнений}
+Цель понижения порядка уравнений \-- сведение уравнений к ОДУ первого порядка
+\label{sec:manyderivatives}
+\section{В левую часть уравнения явно не входит y}
+\subsection{Вид и решение}
+\begin{align}
+  F(x, y^{(k)}, y^{(k+1)} = 0
+\end{align}
+Делаем замену: $y^{(k)} = z \Rightarrow y^{(k+1)} = z'$
+\begin{align}
+  F(x, y', y'') = 0
+\end{align}
+Пусть $y' = z, y'' = z'$. Пример:
+\begin{align*}
+&  x^2y'' = (y')^2  && z = y'\\
+& x^2z' = z^2 && z = 0\\
+&x^2\frac{dz}{dx} = z^2\\
+&\frac{dz}{z^2} = \frac{dx}{x^2}\\
+&\frac1z = \frac1x + C_1\\
+&z =  \frac1{1/x + C_1}\\
+\end{align*}
+\begin{equation*}
+  \left[
+    \begin{array}{ll}
+z = \frac{x}{C_1 x+1}\\
+z =0 \\
+\end{array}
+\right. \Leftrightarrow
+\left[
+\begin{array}{ll}
+  y' = \frac{x}{C_1x + 1}\\
+  y' = 0
+\end{array}
+\right. \Leftrightarrow
+\left[
+  \begin{array}{ll}
+    y = \int\left(\frac{x}{C_1x+1}\right)dx\\
+    y = C\\
+  \end{array}
+\right.
+\end{equation*}
+\begin{equation*}
+  \left[
+  \begin{array}{ll}
+    y = \int \frac{x}{C_1x + 1}dx = \int\frac1{C_1}dx - \int \frac{\frac1{C_1}}{C_1x + 1} dx = \frac{x}{C_1} -\ln |C_1x + 1|\\
+    C_1 = 0 \Rightarrow z = x \Rightarrow y' = x \Rightarrow y = x^2+C_2
+  \end{array}
+  \right.
+\end{equation*}
+
+\section{В левую часть явно не входит x}
+
+\subsection{Вид и пример}
+
+\begin{align}
+  F(y, y', y'') = 0
+\end{align}
+Пусть $y'_x = \rho(y)$
+\begin{align*}
+  y''_{xx} = \frac{d}{dx} (y') = \frac{d}{dx}(\rho(y)) = \frac{d}{dy} \rho(y)\cdot\frac{dy}{dx} = \frac{d\rho}{dy}\rho\\
+  F(y, \rho, \frac{d\rho}{dy}\rho) = 0\\
+  y'' = 2yy'\\
+  y'_x = \rho(y)\\
+  y''_{xx} = \frac{d\rho}{dy}\rho\\
+  \frac{d\rho}{dy}\rho(y) = 2y\rho(y)\\
+  \rho = 0 \Rightarrow y = C\\
+  d\rho = 2ydy\\
+  \rho = y^2 + C_1\\
+  \frac{dy}{dx} = y^2 + C_1\\
+  \frac{dy}{y^2+C_1} = dx \\
+\end{align*}
+\begin{equation*}
+  x+C_2=\left[
+    \begin{array}{ll}
+      -\frac1y + C_3 & C_1 = 0\\
+      \frac1{\sqrt{C_1}}\arctg\frac{y}{\sqrt{C_1}} & C_1 > 0 \\
+      \frac1{2\sqrt{-C_1}} \ln\abs{\frac{y-\sqrt{-C_1}}{y+\sqrt{-C_1}}} & C_1 < 0
+    \end{array}
+    \right.
+\end{equation*}
+\textbf{Ответ:}\\
+\begin{equation*}
+  \left[
+  \begin{array}{ll}
+    y = C\\
+    y = -\frac1{x+C_2} & C_1 = 0\\
+    x+C_2 = \frac1{\sqrt{C_1}}\arctg\frac{y}{\sqrt{C_1}} & C_2 > 0\\
+    x+C_2 = \frac1{2\sqrt{-C_1}}\ln\abs{\frac{y-\sqrt{C_1}}{y+\sqrt{C_1}}} & C_2 < 0\\
+  \end{array}
+  \right.
+\end{equation*}
+\section{Однородные по y и его производным уравнения}
+
+\subsection{Вид}
+\begin{align}
+  F(x, y, y', y'') = 0
+\end{align}
+где $F(x, ky, ky', ky'') = k^lF(x,y,y', y'')$\\
+Сначала следует рассмотреть существование решений $y = const: dy = 0$.
+Пусть $\displaystyle \frac{y'}{y} = u$
+\begin{align*}
+y' = uy\\
+y'' = u'y + uy' = u'y + u^2y = y\\
+F(x,y, yu, y(u'+u^2)) = 0\\
+y^lF (x,l,u, u'+u^2) = 0\\
+\end{align*}
+
+\subsection{Пример}
+\begin{align*}
+xyy'' - xy'^2 = yy'\\
+\end{align*}
+Пусть $\frac{y'}{y}=u$:
+\begin{align*}
+\frac{y'}{y} = u, y \neq 0\\
+y' = uy && y'' = (u' + u^2)y'\\
+xy^2(u'+u^2) - xy^2u^2 = y^2u\\
+x(u'+u^2) - xu^2 = u \\
+xu' + xu^2 - xu^2 = u \\
+xu' = u\\
+u = Cx + C_1\\
+\frac{y'}y = Cx && \frac{dy}y = Cxdx\\
+\ln|y|= С\frac{x^2}2 + C_1\\
+\end{align*}
+\begin{equation*}
+  \left[
+    \begin{array}{ll}
+      y = \pm C_2e^{\frac{Cx^2}2} & C_2 = e^{C_1}\\
+      y = 0
+    \end{array}
+    \right.
+\end{equation*}
+\begin{align*}
+\text{\bfseries Ответ:   }  \boxed{y = C_3\cdot e^{\frac{Cx^2}2}, C_3 \in \mathbb{R}, C \in \mathbb{R}}
+\end{align*}
+
+\section{Уравнение, левая часть которого представляет собой полный дифференциал}
+
+\subsection{Вид}
+\begin{align}
+  F(x,y, y', y'') = 0 \\
+  \text{ где } F(x, y, y', y'') = \frac{d}{dx} \Phi(x,y,y')\nonumber\\
+  \Phi(x,y,y') = C\nonumber
+\end{align}
+
+\subsection{Пример}
+\begin{align*}
+xy'' - y' = x^2yy'\\
+\frac{d}{dx} y^2 = 2yy'\\
+\left(\frac{y'}x\right)' = \frac12 \left(y^2\right)'\\
+\frac{y'}x = \frac12y^2 + C_1\\
+\frac{dy}{\frac12y^2+C_1} = xdx && 2\int\frac{2y}{y^2+2C_1} = \int xdx\\
+\frac12y^2 + C_1 = 0 \Rightarrow y = \pm\sqrt{-2C_1}
+\end{align*}
+
+\begin{equation*}
+  \left[
+    \begin{array}{ll}
+      \frac{x^2}2 + C = \frac2{C_2}\arctg \frac{y}{C_2} & C_1 > 0, C_2 = \sqrt{2C_1}\\
+      \frac{x^2}2 + C = \frac1{C_2} \ln\abs{\frac{y-C_2}{y+C_2}} & C_1 < 0, C_2 =\sqrt{-2C_1}\\
+    \end{array}
+    \right.
+\end{equation*}
+
+\chapter{Линейные уравнения с постоянными коэффициентами}
+
+\section{Однородные (с правой частью = 0)}
+\subsection{Вид}
+\begin{align}
+\label{eq:linearhomo}
+  a_0y^{(n)} + a_1y^{(n-1)} + \ldots + a_ny = 0
+\end{align}
+(\ref{eq:linearhomo}) в дальнейшем используется как ссылка на левую часть данного выражения.
+
+\subsection{Решение}
+\label{sec:solvelinearhomo}
+\begin{enumerate}
+\item Составить характеристическое уравнение вида $a_0\lambda^n + a_1\lambda^{n-1} + \ldots + a_{n-1}\lambda + a_{n} = 0$, где $a_0, a_1, \ldots, a_n - const \in \mathbb{R}$
+ и найти его корни и кратность каждого корня.
+\item Общим решение будет сумма из слагаемых
+  \begin{itemize}
+  \item $C_je^{\lambda_ix}$ для каждого $j$-го простого вещественного корня уравнения
+  \item $(C_{m+1} + C_{m+2}x + C_{m+3}x^2 + \ldots + C_{m+k}x^{k-1})e^{\lambda_ix}$ для каждого $i$-го вещественного корня уравнения с кратностью $k$. \label{nsec}
+  \item $C_{m+1}e^{\alpha x}\cos\beta x + C_{m+2}e^{\alpha x}\sin\beta x$ для каждой пары простых комплексных корней уравнения вида $\alpha \pm \beta i$
+  \item $P_{k-1}(x)e^{\alpha x}\cos \alpha x + Q_{k-1}(x)e^{\alpha x}\sin \beta x$ для каждой пары комплексных корней кратности $k$ вида $\alpha \pm \beta i$ с многочленами как в (\ref{nsec}).
+  \end{itemize}
+\end{enumerate}
+
+\section{Неоднородные тип 1}
+
+\subsection{Вид}
+\begin{align}
+  \label{eq:nonlinearhomo1}
+  (\ref{eq:linearhomo}) =  (b_o + b_1x + \ldots + b_mx^m)\cdot e^{\alpha x}
+\end{align}
+
+\subsection{Решение}
+\label{sec:solvenonhomotype1}
+
+\begin{enumerate}
+\item Для левой части уравнения, приравненной к 0, выполнить (\ref{sec:solvelinearhomo}) (найти общее решение) \label{findgeneralsolutionforhomo}
+\item Для правой части уравнения найти общий  вид многочлена $y_1 = x^sQ_m(x)e^{\Upsilon x}$ (частное решение неоднородного уравнения), где:
+  \begin{itemize}
+  \item $\Upsilon$ - коэффициент перед $x$ в степени экспоненты в данной правой части (или $0$, если нет экспоненты).
+  \item $s$ - кратность корня $\Upsilon$ характеристического уравнения, полученного на шаге (\ref{findgeneralsolutionforhomo}) (или $0$, если такого корня нет)
+  \item $m$ - Степень многочлена $Q$, совпадающая со степенью многочлена перед $e$ в данной правой части
+  \item $Q(x)$ - многочлен в общем виде ($a_0 + a_1^x + \ldots$)
+  \end{itemize} \label{eq:findpolynonhomo}
+\item Подставить многочлен из предыдущего шага в левую часть дифференциального уравнения (\ref{eq:nonlinearhomo1}), предвадительно найдя необходимые производные.
+\item Приравнять коэффициенты при степенях многочленов в левой и правой части и найти коэффициенты многочлена частного решения,
+\item Сложить общее решение с полученным на шаге \ref{eq:findpolynonhomo} частным решением
+\end{enumerate}
+
+\section{Неоднородные тип 2}
+
+\subsection{Вид}
+\begin{align}
+  (\ref{eq:linearhomo}) = e^{\alpha x}(P(x)\cos \beta x + Q(x)\sin\beta x)
+\end{align}
+
+\subsection{Решение}
+Аналогично (\ref{sec:solvenonhomotype1}), но многочлен частного решения имеет вид:
+
+\end{document}
